@@ -1,0 +1,8 @@
+prefix=/home/osboxes/ros_ws/src/morus_uav_gazebo/morus_control/cmake-build-debug/devel
+
+Name: morus_control
+Description: Description of morus_control
+Version: 0.0.0
+Cflags: -I/home/osboxes/ros_ws/src/morus_uav_gazebo/morus_control/include -I/home/osboxes/ros_ws/src/morus_uav_gazebo/morus_control/lib -I/home/osboxes/ros_ws/src/morus_uav_gazebo/morus_control/src -I/home/osboxes/ros_ws/src/morus_uav_gazebo/morus_control/config
+Libs: -L/home/osboxes/ros_ws/src/morus_uav_gazebo/morus_control/cmake-build-debug/devel/lib -lmorus_control
+Requires: roscpp cmake_modules

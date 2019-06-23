@@ -1,0 +1,2 @@
+/usr/bin/ar qc devel/lib/libAdam_lib.a  CMakeFiles/Adam_lib.dir/src/MPC_solvers/Adam_MPC.cpp.o CMakeFiles/Adam_lib.dir/src/attitude_mpc_ctl_adam.cpp.o CMakeFiles/Adam_lib.dir/src/attitude_teleop_joy.cpp.o
+/usr/bin/ranlib devel/lib/libAdam_lib.a

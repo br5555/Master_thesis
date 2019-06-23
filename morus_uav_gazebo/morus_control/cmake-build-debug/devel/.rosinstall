@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/osboxes/ros_ws/src/morus_uav_gazebo/morus_control/cmake-build-debug/devel/setup.sh

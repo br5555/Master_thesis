@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" default="/morus"/>
+  <arg name="attitude_ctrl_flag" default="true"/>
+  
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find morus_control)/config/morus_control.yaml" command="load"/>
+
+  <node pkg="morus_control" type="mav_state_pub.py" name="mav_state_pub" output="screen"  ns="$(arg namespace)">
+  	<remap from="imu" to="ahrs" />
+  </node>
+
+  <!-- Height controller -->
+  <node pkg="morus_control" type="height_yaw_ctl_40_ms.py" name="height_ctl" output="screen"  ns="$(arg namespace)">
+        <param name="gm_attitude_ctl" value="0"/>
+  </node>
+  
+  <node pkg="morus_control" type="float2gmStatus.py" name="translator" ns="$(arg namespace)"/>
+  
+  <group if="$(arg attitude_ctrl_flag)">
+  <!-- If attitude_ctrl_flag is true run attitude mass controller -->
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+      output="screen" ns="$(arg namespace)"  args="joint_state_controller
+		  movable_mass_0_position_controller
+		  movable_mass_1_position_controller 
+		  movable_mass_2_position_controller 
+		  movable_mass_3_position_controller">
+    <remap from="/robot_description" to="$(arg namespace)/robot_description"/>
+    </node>
+    
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+      respawn="false" output="screen"  ns="$(arg namespace)">
+      <!--remap from="/joint_states" to="$(arg namespace)/joint_states"/-->
+      <remap from="/robot_description" to="$(arg namespace)/robot_description"/>
+    </node>
+
+    <!-- Attitude controller -->
+    <node pkg="morus_control" type="mass_ctl_attitude_40_ms.py" name="mass_ctl_attitude" output="screen"  ns="$(arg namespace)">
+    <remap from="movable_mass_0_position_controller/command" to="$(arg namespace)/command/mass_0/motor_speed" />
+    <remap from="movable_mass_1_position_controller/command" to="$(arg namespace)/command/mass_1/motor_speed" />
+    <remap from="movable_mass_2_position_controller/command" to="$(arg namespace)/command/mass_2/motor_speed" />
+    <remap from="movable_mass_3_position_controller/command" to="$(arg namespace)/command/mass_3/motor_speed" />
+    <remap from="pid_roll" to="$(arg namespace)/command/pid_roll/motor_speed" />
+    <remap from="pid_roll_rate" to="$(arg namespace)/command/pid_roll_rate/motor_speed" />
+    <remap from="pid_pitch" to="$(arg namespace)/command/pid_pitch/motor_speed" />
+    <remap from="pid_pitch_rate" to="$(arg namespace)/command/pid_pitch_rate/motor_speed" />
+    <remap from="pid_yaw" to="$(arg namespace)/command/pid_yaw/motor_speed" />
+    <remap from="pid_yaw_rate" to="$(arg namespace)/command/pid_yaw_rate/motor_speed" />
+    </node>
+
+  </group>
+  
+
+  <!--
+  <node pkg="rosbag" type="record" name="rosbag_rec" args="/morus/sensors/pose1 /morus/velocity /morus/imu /morus/euler /morus/movable_mass_0_position_controller/state /morus/movable_mass_1_position_controller/state/morus/movable_mass_1_position_controller/state /morus/movable_mass_3_position_controller/state /morus/pid_roll_rate /morus/pid_roll /morus/pid_pitch_rate /morus/pid_pitch /morus/pid_z /morus/pid_vz"
+   />
+  -->
+</launch>
+
+

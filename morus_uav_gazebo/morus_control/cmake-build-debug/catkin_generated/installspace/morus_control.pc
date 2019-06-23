@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: morus_control
+Description: Description of morus_control
+Version: 0.0.0
+Cflags: -I/usr/local/include
+Libs: -L/usr/local/lib -lmorus_control
+Requires: roscpp cmake_modules

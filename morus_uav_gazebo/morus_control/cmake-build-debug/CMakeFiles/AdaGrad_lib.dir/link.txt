@@ -1,0 +1,2 @@
+/usr/bin/ar qc devel/lib/libAdaGrad_lib.a  CMakeFiles/AdaGrad_lib.dir/src/MPC_solvers/AdaGrad.cpp.o
+/usr/bin/ranlib devel/lib/libAdaGrad_lib.a

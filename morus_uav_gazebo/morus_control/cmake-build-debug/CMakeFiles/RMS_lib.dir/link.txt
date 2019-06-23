@@ -1,0 +1,2 @@
+/usr/bin/ar qc devel/lib/libRMS_lib.a  CMakeFiles/RMS_lib.dir/src/MPC_solvers/RMS_Prop_MPC.cpp.o
+/usr/bin/ranlib devel/lib/libRMS_lib.a

@@ -1,0 +1,2 @@
+/usr/bin/ar qc devel/lib/libRMSNester_lib.a  CMakeFiles/RMSNester_lib.dir/src/MPC_solvers/RMS_Prop_with_Nester_momentum_MPC.cpp.o
+/usr/bin/ranlib devel/lib/libRMSNester_lib.a
